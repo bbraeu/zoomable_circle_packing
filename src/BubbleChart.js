@@ -77,23 +77,7 @@ export default class BubbleChart extends Component {
 			.on('click', (d) => {
 				if (this.focus !== d) this.zoom(d);
 				d3.event.stopPropagation();
-			});
-
-		this.circle
-			.attr('transform', (d) => {
-				return (
-					'translate(' +
-					(d.x - this.view[0]) * this.state.diameter / this.view[2] +
-					',' +
-					(d.y - this.view[1]) * this.state.diameter / this.view[2] +
-					')'
-				);
 			})
-			.attr('r', (d) => {
-				return d.r * this.state.diameter / this.view[2];
-			});
-
-		this.g.selectAll('circle').data(this.nodes.descendants()).exit().remove().transition();
 
 		this.zoomTo([ this.view[0], this.view[1], this.view[2] * 2 + this.state.margin ], this.root);
 	}
@@ -150,18 +134,18 @@ export default class BubbleChart extends Component {
 
 		this.currentDepth = node.depth;
 
-		this.circle.attr('transform', (d) => {
-			return (
-				'translate(' +
-				(d.x - this.view[0]) * this.state.diameter / this.view[2] +
-				',' +
-				(d.y - this.view[1]) * this.state.diameter / this.view[2] +
-				')'
-			);
-		});
-
-		this.circle.attr('r', (d) => {
-			return d.r * this.state.diameter / this.view[2];
-		});
+		this.circle
+			.attr('transform', (d) => {
+				return (
+					'translate(' +
+					(d.x - this.view[0]) * this.state.diameter / this.view[2] +
+					',' +
+					(d.y - this.view[1]) * this.state.diameter / this.view[2] +
+					')'
+				);
+			})
+			.attr('r', (d) => {
+				return d.r * this.state.diameter / this.view[2];
+			});
 	}
 }
